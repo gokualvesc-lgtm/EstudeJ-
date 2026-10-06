@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e8">
+  <title>Exercícios | EstudeJá</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18372f;
+      --muted: #6d796f;
+      --paper: #f4f1e8;
+      --white: #fffefa;
+      --green: #1d5947;
+      --green-dark: #174536;
+      --lime: #d4e78a;
+      --line: #e2e3d9;
+      --coral: #d9795e;
+      --red: #a85042;
+    }
+
+    * { box-sizing: border-box; }
+    body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; }
+    button, select, input, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button:focus-visible, a:focus-visible, select:focus-visible { outline: 3px solid rgba(217, 121, 94, .65); outline-offset: 3px; }
+
+    .sidebar { position: fixed; inset: 0 auto 0 0; z-index: 2; display: flex; width: 238px; flex-direction: column; padding: 25px 16px 18px; border-right: 1px solid var(--line); background: var(--white); }
+    .brand { display: flex; align-items: center; gap: 9px; margin: 0 0 33px 8px; font: 800 20px "Manrope", sans-serif; }
+    .brand-mark { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; background: var(--lime); font-size: 18px; }
+    .nav-label { margin: 0 0 9px 11px; color: #929b92; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .navigation { display: grid; gap: 4px; }
+    .navigation a { padding: 12px 10px; border-radius: 4px; color: #637167; font-size: 12px; font-weight: 600; }
+    .navigation a:hover, .navigation a.active { background: #eaf0df; color: var(--green); }
+    .sidebar-spacer { flex: 1; }
+    .sidebar-rule { height: 1px; margin: 12px 8px 17px; background: var(--line); }
+    .logout { padding: 11px; color: #8b6256; font-size: 12px; font-weight: 700; }
+    .logout:hover { background: #f9eee8; }
+
+    .main { min-height: 100vh; margin-left: 238px; padding: 32px clamp(20px, 5vw, 65px) 50px; }
+    .content { width: min(100%, 1050px); margin: 0 auto; }
+    .topbar { margin-bottom: 27px; color: var(--muted); font-size: 11px; }
+    .topbar strong { color: var(--ink); }
+    .heading-row { display: block; margin-bottom: 25px; }
+    h1 { margin: 0 0 7px; font: 700 29px/1.2 "Manrope", sans-serif; }
+    .intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .subject-control label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 10px; font-weight: 700; }
+    .subject-control select { min-width: 170px; height: 39px; padding: 0 32px 0 11px; border: 1px solid var(--line); border-radius: 4px; background: var(--white); color: var(--ink); font-size: 11px; }
+
+    .practice-layout { display: grid; grid-template-columns: minmax(0, 1fr) 225px; gap: 15px; align-items: start; }
+    .practice-layout[hidden] { display: none; }
+    .exercise-panel { padding: 23px; border: 1px solid var(--line); border-radius: 5px; background: var(--white); }
+    .exercise-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .topic { display: inline-flex; align-items: center; gap: 7px; color: var(--green); font-size: 10px; font-weight: 700; }
+    .topic::before { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); content: ""; }
+    .counter { color: var(--muted); font-size: 10px; font-weight: 600; }
+    .progress-track { height: 5px; overflow: hidden; border-radius: 5px; background: #edf0e8; }
+    .progress-fill { width: 50%; height: 100%; border-radius: inherit; background: var(--green); transition: width 180ms ease; }
+    .question { min-height: 74px; margin: 22px 0 17px; font: 600 17px/1.5 "Manrope", sans-serif; }
+    .choices { display: grid; gap: 9px; }
+    .choice { display: flex; width: 100%; min-height: 47px; align-items: center; gap: 11px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 4px; background: #fff; color: var(--ink); text-align: left; cursor: pointer; transition: border-color 150ms ease, background 150ms ease; }
+    .choice:hover:not(:disabled) { border-color: #9bb08e; background: #f8faf3; }
+    .choice:disabled { cursor: default; }
+    .choice-letter { display: grid; width: 25px; height: 25px; flex: 0 0 auto; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font-size: 10px; font-weight: 700; }
+    .choice-text { font-size: 11px; line-height: 1.5; }
+    .choice.correct { border-color: #8fb179; background: #edf4e6; }
+    .choice.correct .choice-letter { border-color: var(--green); background: var(--green); color: white; }
+    .choice.incorrect { border-color: #d6a095; background: #fbefec; }
+    .choice.incorrect .choice-letter { border-color: var(--red); background: var(--red); color: white; }
+    .feedback { min-height: 21px; margin: 13px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .feedback.correct { color: var(--green); }
+    .feedback.incorrect { color: var(--red); }
+    .exercise-actions { display: flex; justify-content: flex-end; margin-top: 10px; }
+    .next-button, .restart-button { display: inline-flex; min-height: 39px; align-items: center; gap: 8px; padding: 0 13px; border: 0; border-radius: 3px; background: var(--green); color: white; font-size: 10px; font-weight: 700; cursor: pointer; }
+    .next-button:hover, .restart-button:hover { background: var(--green-dark); }
+    .next-button:disabled { background: #c9cec5; cursor: not-allowed; }
+    .next-button svg { width: 15px; height: 15px; }
+
+    .study-aside { padding: 19px; border-radius: 4px; background: #e9eddf; }
+    .aside-icon { display: grid; width: 36px; height: 36px; margin-bottom: 14px; place-items: center; border-radius: 50%; background: rgba(255,255,255,.7); color: var(--green); font-size: 16px; }
+    .study-aside h2 { margin: 0 0 7px; font: 700 13px "Manrope", sans-serif; }
+    .study-aside p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
+    .score-line { display: flex; justify-content: space-between; margin-top: 17px; padding-top: 13px; border-top: 1px solid rgba(24,55,47,.12); color: var(--muted); font-size: 10px; }
+    .score-line strong { color: var(--ink); }
+    .result-panel { display: none; padding: 32px 20px; border: 1px solid var(--line); border-radius: 5px; background: var(--white); text-align: center; }
+    .result-panel.visible { display: block; }
+    .result-mark { display: grid; width: 52px; height: 52px; margin: 0 auto 14px; place-items: center; border-radius: 50%; background: var(--lime); color: var(--green); font-size: 22px; }
+    .result-panel h2 { margin: 0 0 8px; font: 700 21px "Manrope", sans-serif; }
+    .result-panel p { margin: 0 0 20px; color: var(--muted); font-size: 12px; }
+
+    .editor-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 14px; align-items: start; }
+    .editor-panel { padding: 20px; border: 1px solid var(--line); border-radius: 5px; background: var(--white); }
+    .editor-panel h2 { margin: 0 0 5px; font: 700 14px "Manrope", sans-serif; }
+    .panel-intro { margin: 0 0 18px; color: var(--muted); font-size: 10px; line-height: 1.55; }
+    .editor-field { margin-bottom: 14px; }
+    .editor-field label { display: block; margin-bottom: 6px; font-size: 10px; font-weight: 700; }
+    .editor-field input, .editor-field textarea, .filter-input, .json-input { width: 100%; border: 1px solid var(--line); border-radius: 3px; background: #fff; color: var(--ink); }
+    .editor-field input { height: 40px; padding: 0 10px; }
+    .editor-field textarea { min-height: 85px; padding: 10px; resize: vertical; font-size: 11px; line-height: 1.55; }
+    .editor-field input:focus, .editor-field textarea:focus, .filter-input:focus, .json-input:focus { outline: 2px solid rgba(29,89,71,.25); border-color: var(--green); }
+    .editor-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .primary-button, .secondary-button, .small-button { min-height: 37px; padding: 0 12px; border: 0; border-radius: 3px; font-size: 10px; font-weight: 700; cursor: pointer; }
+    .primary-button { background: var(--green); color: #fff; }
+    .primary-button:hover { background: var(--green-dark); }
+    .secondary-button, .small-button { border: 1px solid var(--line); background: transparent; color: var(--ink); }
+    .secondary-button:hover, .small-button:hover { background: #f3f4ed; }
+    .editor-message { min-height: 18px; margin: 10px 0 0; color: var(--green); font-size: 10px; }
+    .list-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    .count { color: var(--muted); font-size: 10px; white-space: nowrap; }
+    .filter-input { height: 37px; margin-bottom: 11px; padding: 0 10px; font-size: 10px; }
+    .question-list { display: grid; max-height: 405px; gap: 8px; overflow-y: auto; }
+    .question-item { padding: 12px; border: 1px solid var(--line); border-radius: 3px; background: #fff; }
+    .item-subject { display: inline-block; margin-bottom: 7px; color: var(--green); font-size: 9px; font-weight: 700; }
+    .item-question { margin: 0; font-size: 11px; font-weight: 700; line-height: 1.5; overflow-wrap: anywhere; }
+    .item-answer { margin: 5px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; overflow-wrap: anywhere; }
+    .item-actions { display: flex; gap: 6px; margin-top: 10px; }
+    .small-button { min-height: 29px; padding: 0 9px; font-size: 9px; }
+    .small-button.delete { color: #9a4d40; }
+    .empty-list { padding: 24px 12px; border: 1px dashed #cbd1c3; color: var(--muted); font-size: 10px; line-height: 1.6; text-align: center; }
+    .transfer-panel { margin-top: 14px; }
+    .transfer-panel details > summary { color: var(--green); font-size: 11px; font-weight: 700; cursor: pointer; }
+    .transfer-panel details > p { margin: 10px 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+    .json-input { min-height: 100px; padding: 10px; resize: vertical; font-family: Consolas, monospace; font-size: 10px; line-height: 1.5; }
+    .json-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 9px; }
+    .editor-grid, .transfer-panel { display: none; }
+    .data-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 15px; }
+    .data-toolbar p { margin: 0; color: var(--muted); font-size: 11px; }
+    .data-toolbar input { width: min(100%, 280px); height: 38px; padding: 0 11px; border: 1px solid var(--line); border-radius: 3px; background: var(--white); color: var(--ink); font-size: 10px; }
+    .provided-list { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line); }
+    .provided-exercise { display: grid; min-width: 0; grid-template-columns: minmax(105px, 160px) minmax(0, 1fr); align-items: start; gap: 12px 18px; padding: 17px 12px; border-bottom: 1px solid var(--line); background: transparent; }
+    .provided-subject { display: inline-block; width: fit-content; margin-top: 1px; padding: 5px 8px; border-radius: 3px; background: #eaf0df; color: var(--green); font-size: 9px; font-weight: 700; }
+    .provided-question { margin: 0; font: 600 13px/1.55 "Manrope", sans-serif; overflow-wrap: anywhere; }
+    .provided-answer { grid-column: 2; margin-top: -3px; padding-top: 8px; }
+    .provided-answer summary { color: var(--green); font-size: 10px; font-weight: 700; cursor: pointer; }
+    .provided-answer p { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; overflow-wrap: anywhere; }
+    .no-results { display: none; padding: 22px; border: 1px dashed #cbd1c3; color: var(--muted); font-size: 11px; text-align: center; }
+    .empty-data { padding: 28px; border: 1px dashed #cbd1c3; background: rgba(255,254,250,.6); color: var(--muted); font-size: 11px; line-height: 1.6; text-align: center; }
+
+    @media (max-width: 850px) { .sidebar { width: 210px; } .main { margin-left: 210px; padding-inline: 23px; } .editor-grid { grid-template-columns: 1fr; } .question-list { max-height: 330px; } }
+    @media (max-width: 650px) { .sidebar { position: sticky; inset: 0 0 auto; width: 100%; padding: 9px 11px 7px; border-right: 0; border-bottom: 1px solid var(--line); } .brand { margin: 0 0 7px 3px; font-size: 17px; } .brand-mark { width: 28px; height: 28px; } .nav-label, .sidebar-spacer, .sidebar-rule { display: none; } .navigation { display: flex; overflow-x: auto; gap: 3px; scrollbar-width: thin; } .navigation a { min-height: 34px; flex: 0 0 auto; gap: 5px; padding: 0 7px; font-size: 9px; white-space: nowrap; } .navigation a span:first-child { width: auto; font-size: 13px; } .logout { position: absolute; top: 9px; right: 8px; padding: 8px; font-size: 0; } .logout::after { content: "↪"; font-size: 16px; } .main { margin: 0; padding: 20px 14px 35px; } .topbar { margin-bottom: 18px; } .heading-row { margin-bottom: 18px; } h1 { font-size: 25px; } .subject-control select { width: 100%; } .exercise-panel { padding: 17px; } .question { min-height: 0; font-size: 15px; } .study-aside { align-items: flex-start; } .score-line { min-width: 82px; flex-direction: column; gap: 4px; } .editor-panel { padding: 16px; } .data-toolbar { align-items: stretch; flex-direction: column; } .data-toolbar input { width: 100%; } .provided-exercise { grid-template-columns: 1fr; gap: 8px; padding: 15px 7px; } .provided-answer { grid-column: 1; margin-top: 1px; } }
+    @media (max-width: 650px) { .sidebar { position: sticky; inset: 0 0 auto; width: 100%; padding: 9px 11px 7px; border-right: 0; border-bottom: 1px solid var(--line); } .brand { margin: 0 0 7px 3px; font-size: 17px; } .brand-mark { width: 28px; height: 28px; } .nav-label, .sidebar-spacer, .sidebar-rule { display: none; } .navigation { display: flex; overflow-x: auto; gap: 3px; scrollbar-width: thin; } .navigation a { min-height: 34px; flex: 0 0 auto; gap: 5px; padding: 0 7px; font-size: 9px; white-space: nowrap; } .logout { position: absolute; top: 9px; right: 8px; padding: 8px; font-size: 0; } .logout::after { content: "↪"; font-size: 16px; } .main { margin: 0; padding: 20px 14px 35px; } .topbar { margin-bottom: 18px; } .heading-row { margin-bottom: 18px; } h1 { font-size: 25px; } .subject-control select { width: 100%; } .exercise-panel { padding: 17px; } .question { min-height: 0; font-size: 15px; } .study-aside { align-items: flex-start; } .score-line { min-width: 82px; flex-direction: column; gap: 4px; } .editor-panel { padding: 16px; } .data-toolbar { align-items: stretch; flex-direction: column; } .data-toolbar input { width: 100%; } .provided-exercise { grid-template-columns: 1fr; gap: 8px; padding: 15px 7px; } .provided-answer { grid-column: 1; margin-top: 1px; } .navigation a { min-height: auto; gap: 0; padding: 9px 7px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Navegação principal">
+    <a class="brand" href="{{ url_for('main') }}"><span class="brand-mark" aria-hidden="true">⌂</span>EstudeJá</a>
+    <nav class="navigation">
+      <a href="{{ url_for('main') }}">⌂ &nbsp; Início</a>
+      <a href="{{ url_for('materias') }}">▤ &nbsp; Matérias</a>
+      <a class="active" href="{{ url_for('exercicios') }}" aria-current="page">✎ &nbsp; Exercícios</a>
+      <a href="{{ url_for('ia') }}">✳ &nbsp; Assistência com IA</a>
+      <a href="{{ url_for('progresso') }}">↗ &nbsp; Meu progresso</a>
+      <a href="{{ url_for('simulados') }}">▣ &nbsp; Simulados</a>
+      <a href="{{ url_for('perfil') }}">◎ &nbsp;Configurações de perfil</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <a class="logout" href="{{ url_for('logout') }}">↪ &nbsp;Sair da conta</a>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <header class="topbar"><a href="{{ url_for('main') }}">Início</a> &nbsp;/&nbsp; <strong>Exercícios</strong></header>
+      <div class="heading-row">
+        <div><h1>Exercícios</h1><p class="intro">Perguntas e respostas da matéria selecionada.</p></div>
+      </div>
+
+      {% set lista_exercicios = exercicios|default([], true) %}
+      {% if lista_exercicios %}
+      <div class="data-toolbar">
+        <p>{{ lista_exercicios|length }} exercício(s) recebido(s)</p>
+        <input id="exercise-search" type="search" placeholder="Buscar por matéria ou pergunta" aria-label="Buscar exercícios">
+      </div>
+      <section class="provided-list" id="provided-list" aria-label="Lista de exercícios">
+        {% for exercicio in lista_exercicios %}
+        <article class="provided-exercise" data-search="{{ exercicio.materia }} {{ exercicio.pergunta }}">
+          <span class="provided-subject">{{ exercicio.materia }}</span>
+          <h2 class="provided-question">{{ exercicio.pergunta }}</h2>
+          <details class="provided-answer">
+            <summary>Ver resposta</summary>
+            <p>{{ exercicio.resposta }}</p>
+          </details>
+        </article>
+        {% endfor %}
+      </section>
+      <p class="no-results" id="no-results">Nenhum exercício corresponde à busca.</p>
+      {% else %}
+      <div class="empty-data">Nenhum exercício foi enviado para esta tela.</div>
+      {% endif %}
+
+      <div class="editor-grid">
+        <form class="editor-panel" id="exercise-form">
+          <h2 id="form-title">Novo exercício</h2>
+          <p class="panel-intro">Os exercícios ficam salvos neste navegador e podem ser editados quando quiser.</p>
+          <input id="exercise-id" type="hidden">
+          <div class="editor-field"><label for="exercise-subject">Matéria</label><input id="exercise-subject" name="subject" type="text" list="subject-suggestions" placeholder="Ex.: Matemática" required><datalist id="subject-suggestions"></datalist></div>
+          <div class="editor-field"><label for="exercise-question">Pergunta</label><textarea id="exercise-question" name="question" placeholder="Digite a pergunta do exercício" required></textarea></div>
+          <div class="editor-field"><label for="exercise-answer">Resposta correta</label><textarea id="exercise-answer" name="answer" placeholder="Digite a resposta esperada" required></textarea></div>
+          <div class="editor-actions"><button class="primary-button" id="save-exercise" type="submit">Adicionar exercício</button><button class="secondary-button" id="cancel-edit" type="button" hidden>Cancelar edição</button></div>
+          <p class="editor-message" id="editor-message" role="status" aria-live="polite"></p>
+        </form>
+
+        <section class="editor-panel" aria-labelledby="list-title">
+          <div class="list-heading"><h2 id="list-title">Exercícios salvos</h2><span class="count" id="exercise-count">0 itens</span></div>
+          <input class="filter-input" id="exercise-filter" type="search" placeholder="Filtrar por matéria ou pergunta" aria-label="Filtrar exercícios">
+          <div class="question-list" id="exercise-list"></div>
+        </section>
+      </div>
+
+      <section class="editor-panel transfer-panel">
+        <details>
+          <summary>Importar ou exportar uma lista de exercícios</summary>
+          <p>Use JSON com os campos <code>subject</code>, <code>question</code> e <code>answer</code>. Importar substitui a lista atual.</p>
+          <textarea class="json-input" id="json-data" aria-label="Dados JSON dos exercícios" placeholder='[{"subject":"Matemática","question":"Quanto é 2 + 2?","answer":"4"}]'></textarea>
+          <div class="json-actions"><button class="secondary-button" id="import-json" type="button">Importar JSON</button><button class="secondary-button" id="export-json" type="button">Exportar JSON</button></div>
+          <p class="editor-message" id="transfer-message" role="status" aria-live="polite"></p>
+        </details>
+      </section>
+
+      <div class="practice-layout" id="practice-layout" hidden>
+        <section class="exercise-panel" aria-labelledby="question-text">
+          <div class="exercise-top"><span class="topic" id="topic-label">Matemática</span><span class="counter" id="question-counter">Questão 1 de 2</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Progresso da lista" aria-valuemin="0" aria-valuemax="2" aria-valuenow="1"><div class="progress-fill" id="progress-fill"></div></div>
+          <h2 class="question" id="question-text"></h2>
+          <div class="choices" id="choices" role="group" aria-label="Alternativas"></div>
+          <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+          <div class="exercise-actions"><button class="next-button" id="next-button" type="button" disabled>Responder para continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+        </section>
+        <aside class="study-aside"><span class="aside-icon" aria-hidden="true">✦</span><div><h2>Aprender também é tentar</h2><p>Leia com atenção. Se errar, a explicação ajuda a entender o caminho.</p></div><div class="score-line"><span>Acertos</span><strong id="score">0</strong></div></aside>
+      </div>
+
+      <section class="result-panel" id="result-panel" aria-live="polite" hidden><span class="result-mark" aria-hidden="true">✓</span><h2>Prática concluída</h2><p id="result-summary"></p><button class="restart-button" id="restart-button" type="button">Tentar novamente</button></section>
+    </div>
+  </main>
+
+  <script type="text/plain">
+    const questionSets = {
+      Matemática: [
+        { question: "Quanto é 3/4 de 20?", choices: ["12", "15", "16", "18"], answer: 1, explanation: "Um quarto de 20 é 5. Três quartos são 3 × 5 = 15." },
+        { question: "Qual é o resultado de 8 × 7?", choices: ["54", "56", "64", "48"], answer: 1, explanation: "8 × 7 = 56." }
+      ],
+      Português: [
+        { question: "Qual palavra é um substantivo nesta frase: ‘A leitura abriu novos caminhos’?", choices: ["abriu", "novos", "caminhos", "a"], answer: 2, explanation: "‘Caminhos’ nomeia algo, por isso funciona como substantivo." },
+        { question: "Qual alternativa tem a pontuação correta?", choices: ["Vamos estudar, pessoal!", "Vamos, estudar pessoal!", "Vamos estudar pessoal.", "Vamos estudar pessoal?"], answer: 0, explanation: "A vírgula separa o vocativo ‘pessoal’ do restante da frase." }
+      ],
+      Biologia: [
+        { question: "Qual organela celular está ligada à produção de energia?", choices: ["Ribossomo", "Mitocôndria", "Lisossomo", "Complexo golgiense"], answer: 1, explanation: "A mitocôndria participa da respiração celular e da produção de ATP." },
+        { question: "Na fotossíntese, as plantas absorvem principalmente qual gás?", choices: ["Oxigênio", "Nitrogênio", "Gás carbônico", "Hidrogênio"], answer: 2, explanation: "As plantas utilizam gás carbônico, água e luz para produzir matéria orgânica." }
+      ]
+    };
+
+    const subjectSelect = document.getElementById("subject-select");
+    const questionText = document.getElementById("question-text");
+    const choicesElement = document.getElementById("choices");
+    const feedback = document.getElementById("feedback");
+    const nextButton = document.getElementById("next-button");
+    const questionCounter = document.getElementById("question-counter");
+    const progressFill = document.getElementById("progress-fill");
+    const progressBar = document.querySelector(".progress-track");
+    const scoreElement = document.getElementById("score");
+    const resultPanel = document.getElementById("result-panel");
+    const practiceLayout = document.getElementById("practice-layout");
+    let currentIndex = 0;
+    let correctAnswers = 0;
+    let answered = false;
+
+    function renderQuestion() {
+      const subject = subjectSelect.value;
+      const questions = questionSets[subject];
+      const current = questions[currentIndex];
+      answered = false;
+      document.getElementById("topic-label").textContent = subject;
+      questionCounter.textContent = `Questão ${currentIndex + 1} de ${questions.length}`;
+      progressFill.style.width = `${((currentIndex + 1) / questions.length) * 100}%`;
+      progressBar.setAttribute("aria-valuemax", questions.length);
+      progressBar.setAttribute("aria-valuenow", currentIndex + 1);
+      questionText.textContent = current.question;
+      feedback.textContent = "";
+      feedback.className = "feedback";
+      nextButton.disabled = true;
+      nextButton.firstChild.textContent = currentIndex === questions.length - 1 ? "Ver resultado " : "Próxima questão ";
+      choicesElement.replaceChildren();
+
+      current.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.className = "choice";
+        button.type = "button";
+        button.innerHTML = `<span class="choice-letter">${String.fromCharCode(65 + index)}</span><span class="choice-text"></span>`;
+        button.querySelector(".choice-text").textContent = choice;
+        button.addEventListener("click", () => chooseAnswer(index, button));
+        choicesElement.append(button);
+      });
+    }
+
+    function chooseAnswer(selectedIndex, selectedButton) {
+      if (answered) return;
+      answered = true;
+      const current = questionSets[subjectSelect.value][currentIndex];
+      const choiceButtons = [...choicesElement.querySelectorAll(".choice")];
+      choiceButtons.forEach((button) => { button.disabled = true; });
+      choiceButtons[current.answer].classList.add("correct");
+
+      if (selectedIndex === current.answer) {
+        correctAnswers += 1;
+        scoreElement.textContent = correctAnswers;
+        feedback.textContent = `Isso mesmo! ${current.explanation}`;
+        feedback.classList.add("correct");
+      } else {
+        selectedButton.classList.add("incorrect");
+        feedback.textContent = `Ainda não. ${current.explanation}`;
+        feedback.classList.add("incorrect");
+      }
+      nextButton.disabled = false;
+      nextButton.firstChild.textContent = currentIndex === questionSets[subjectSelect.value].length - 1 ? "Ver resultado " : "Próxima questão ";
+    }
+
+    nextButton.addEventListener("click", () => {
+      if (!answered) return;
+      const total = questionSets[subjectSelect.value].length;
+      if (currentIndex < total - 1) {
+        currentIndex += 1;
+        renderQuestion();
+        return;
+      }
+      practiceLayout.hidden = true;
+      resultPanel.classList.add("visible");
+      document.getElementById("result-summary").textContent = `Você acertou ${correctAnswers} de ${total} questões de ${subjectSelect.value}.`;
+    });
+
+    subjectSelect.addEventListener("change", () => resetPractice());
+    document.getElementById("restart-button").addEventListener("click", () => resetPractice());
+
+    function resetPractice() {
+      currentIndex = 0;
+      correctAnswers = 0;
+      scoreElement.textContent = "0";
+      practiceLayout.hidden = false;
+      resultPanel.classList.remove("visible");
+      renderQuestion();
+    }
+
+    renderQuestion();
+  </script>
+  <script type="text/plain">
+    const storageKey = "estudeja-exercises";
+    const form = document.getElementById("exercise-form");
+    const list = document.getElementById("exercise-list");
+    const message = document.getElementById("editor-message");
+    const transferMessage = document.getElementById("transfer-message");
+    const subjectField = document.getElementById("exercise-subject");
+    const questionField = document.getElementById("exercise-question");
+    const answerField = document.getElementById("exercise-answer");
+    const idField = document.getElementById("exercise-id");
+    const filterField = document.getElementById("exercise-filter");
+    const jsonField = document.getElementById("json-data");
+    let exercises = loadExercises();
+
+    function loadExercises() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        return Array.isArray(saved) ? saved.filter(isExercise) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function isExercise(item) {
+      return item && typeof item.subject === "string" && typeof item.question === "string" && typeof item.answer === "string";
+    }
+
+    function saveExercises() {
+      localStorage.setItem(storageKey, JSON.stringify(exercises));
+      renderExercises();
+    }
+
+    function makeId() {
+      return window.crypto && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function renderExercises() {
+      const query = filterField.value.trim().toLocaleLowerCase("pt-BR");
+      const filtered = exercises.filter((item) => `${item.subject} ${item.question} ${item.answer}`.toLocaleLowerCase("pt-BR").includes(query));
+      document.getElementById("exercise-count").textContent = `${exercises.length} ${exercises.length === 1 ? "item" : "itens"}`;
+      list.replaceChildren();
+
+      if (filtered.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty-list";
+        empty.textContent = exercises.length ? "Nenhum exercício corresponde ao filtro." : "Sua lista está vazia. Use o formulário para adicionar o primeiro exercício.";
+        list.append(empty);
+      }
+
+      filtered.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = "question-item";
+        const subject = document.createElement("span");
+        subject.className = "item-subject";
+        subject.textContent = item.subject;
+        const question = document.createElement("p");
+        question.className = "item-question";
+        question.textContent = item.question;
+        const answer = document.createElement("p");
+        answer.className = "item-answer";
+        answer.textContent = `Resposta: ${item.answer}`;
+        const actions = document.createElement("div");
+        actions.className = "item-actions";
+        const editButton = document.createElement("button");
+        editButton.className = "small-button";
+        editButton.type = "button";
+        editButton.textContent = "Editar";
+        editButton.addEventListener("click", () => editExercise(item));
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "small-button delete";
+        deleteButton.type = "button";
+        deleteButton.textContent = "Excluir";
+        deleteButton.addEventListener("click", () => deleteExercise(item.id));
+        actions.append(editButton, deleteButton);
+        card.append(subject, question, answer, actions);
+        list.append(card);
+      });
+
+      updateSubjectSuggestions();
+    }
+
+    function updateSubjectSuggestions() {
+      const suggestions = document.getElementById("subject-suggestions");
+      suggestions.replaceChildren();
+      [...new Set(exercises.map((item) => item.subject))].sort().forEach((subject) => {
+        const option = document.createElement("option");
+        option.value = subject;
+        suggestions.append(option);
+      });
+    }
+
+    function resetForm() {
+      form.reset();
+      idField.value = "";
+      document.getElementById("form-title").textContent = "Novo exercício";
+      document.getElementById("save-exercise").textContent = "Adicionar exercício";
+      document.getElementById("cancel-edit").hidden = true;
+    }
+
+    function editExercise(item) {
+      idField.value = item.id;
+      subjectField.value = item.subject;
+      questionField.value = item.question;
+      answerField.value = item.answer;
+      document.getElementById("form-title").textContent = "Editar exercício";
+      document.getElementById("save-exercise").textContent = "Salvar alterações";
+      document.getElementById("cancel-edit").hidden = false;
+      message.textContent = "Edite os campos e salve as alterações.";
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+      subjectField.focus({ preventScroll: true });
+    }
+
+    function deleteExercise(id) {
+      exercises = exercises.filter((item) => item.id !== id);
+      if (idField.value === id) resetForm();
+      saveExercises();
+      message.textContent = "Exercício removido.";
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const item = { id: idField.value || makeId(), subject: subjectField.value.trim(), question: questionField.value.trim(), answer: answerField.value.trim() };
+      if (!item.subject || !item.question || !item.answer) return;
+      const existingIndex = exercises.findIndex((exercise) => exercise.id === item.id);
+      if (existingIndex === -1) exercises.unshift(item);
+      else exercises[existingIndex] = item;
+      saveExercises();
+      resetForm();
+      message.textContent = existingIndex === -1 ? "Exercício adicionado." : "Alterações salvas.";
+    });
+
+    document.getElementById("cancel-edit").addEventListener("click", () => { resetForm(); message.textContent = "Edição cancelada."; });
+    filterField.addEventListener("input", renderExercises);
+
+    document.getElementById("export-json").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(exercises.map(({ subject, question, answer }) => ({ subject, question, answer })), null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "exercicios-estudeja.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+      transferMessage.textContent = "Arquivo JSON exportado.";
+    });
+
+    document.getElementById("import-json").addEventListener("click", () => {
+      try {
+        const imported = JSON.parse(jsonField.value);
+        if (!Array.isArray(imported) || imported.some((item) => !isExercise(item) || !item.subject.trim() || !item.question.trim() || !item.answer.trim())) throw new Error("Formato inválido");
+        exercises = imported.map((item) => ({ id: makeId(), subject: item.subject.trim(), question: item.question.trim(), answer: item.answer.trim() }));
+        saveExercises();
+        resetForm();
+        transferMessage.textContent = `${exercises.length} exercícios importados.`;
+      } catch {
+        transferMessage.textContent = "JSON inválido. Confira se cada item tem matéria, pergunta e resposta.";
+      }
+    });
+
+    renderExercises();
+  </script>
+  <script>
+    const exerciseSearch = document.getElementById("exercise-search");
+    if (exerciseSearch) {
+      exerciseSearch.addEventListener("input", () => {
+        const query = exerciseSearch.value.trim().toLocaleLowerCase("pt-BR");
+        let visibleCount = 0;
+        document.querySelectorAll(".provided-exercise").forEach((card) => {
+          const matches = card.dataset.search.toLocaleLowerCase("pt-BR").includes(query);
+          card.hidden = !matches;
+          if (matches) visibleCount += 1;
+        });
+        document.getElementById("no-results").style.display = visibleCount ? "none" : "block";
+      });
+    }
+  </script>
+</body>
+</html>

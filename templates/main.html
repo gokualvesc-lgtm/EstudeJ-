@@ -1,0 +1,163 @@
+```html
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e8">
+  <title>Início | EstudeJá</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#18372f;--muted:#6d796f;--paper:#f4f1e8;--white:#fffefa;--green:#1d5947;--lime:#d4e78a;--line:#e2e3d9;--coral:#d9795e}*{box-sizing:border-box}body{min-width:320px;min-height:100vh;margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif}a{color:inherit;text-decoration:none}button,input{font:inherit}a:focus-visible,button:focus-visible{outline:3px solid var(--coral);outline-offset:3px}.shell{min-height:100vh}.side{position:fixed;inset:0 auto 0 0;z-index:2;display:flex;width:245px;flex-direction:column;padding:25px 17px 18px;border-right:1px solid #e5e5dc;background:var(--white)}.brand{display:flex;align-items:center;gap:10px;margin:0 0 34px 8px;font-family:Manrope,sans-serif;font-size:20px;font-weight:800}.mark{display:grid;width:35px;height:35px;place-items:center;border-radius:50%;background:var(--lime);font-size:18px}.label{margin:0 0 9px 11px;color:#929b92;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}.nav{display:grid;gap:4px}.nav a{display:flex;min-height:41px;align-items:center;gap:10px;padding:0 11px;border-radius:4px;color:#637167;font-size:12px;font-weight:600}.nav a:hover,.nav a.active{background:#eaf0df;color:var(--green)}.nav a span:first-child{width:19px;text-align:center;font-size:16px}.spacer{flex:1}.rule{height:1px;margin:12px 8px 17px;background:var(--line)}.user{display:flex;align-items:center;gap:10px;padding:10px 8px;color:var(--muted);font-size:11px}.avatar{display:grid;width:35px;height:35px;place-items:center;border-radius:50%;background:#f1d5c7;color:#744632;font-weight:700}.logout{display:block;padding:11px;color:#8b6256;font-size:12px;font-weight:700}.logout:hover{background:#f9eee8}.main{margin-left:245px;padding:31px clamp(20px,5vw,65px) 50px}.content{width:min(100%,1100px);margin:auto}.top{display:flex;justify-content:space-between;margin-bottom:25px;color:var(--muted);font-size:11px}.top strong{color:var(--ink)}.hero{min-height:225px;display:flex;align-items:center;padding:32px 36px;border-radius:5px;background:linear-gradient(90deg,rgba(22,65,50,.97),rgba(22,65,50,.78) 55%,rgba(22,65,50,.15)),url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1400&q=85") center/cover;color:white}.hero-copy{max-width:460px}.eyebrow{margin:0 0 11px;color:var(--lime);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}.hero h1{margin:0;font:700 clamp(27px,3vw,36px)/1.2 Manrope,sans-serif}.hero p{max-width:350px;color:#e0e9df;font-size:12px;line-height:1.6}.button{display:inline-flex;min-height:39px;align-items:center;padding:0 14px;border-radius:3px;background:var(--lime);color:var(--ink);font-size:11px;font-weight:700}.section-title{margin:28px 0 14px;font:700 16px Manrope,sans-serif}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin:21px 0 25px;border-block:1px solid var(--line)}.stat{padding:16px 18px}.stat+.stat{border-left:1px solid var(--line)}.stat b,.stat span{display:block}.stat b{font:700 14px Manrope,sans-serif}.stat span{margin-top:4px;color:var(--muted);font-size:10px}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.tile{min-height:115px;padding:15px;border:1px solid var(--line);border-radius:4px;background:var(--white);transition:transform .15s,border-color .15s}.tile:hover{transform:translateY(-2px);border-color:#9aaf8c}.tile-icon{display:grid;width:32px;height:32px;place-items:center;border-radius:3px;background:#eaf0df;color:var(--green);font-size:17px}.tile h2{margin:14px 0 4px;font-size:12px}.tile p{margin:0;color:var(--muted);font-size:10px}.note{margin-top:22px;padding:16px;border-radius:4px;background:#f1e5d2;color:#6c5734;font-size:11px;line-height:1.6}@media(max-width:850px){.side{width:215px}.main{margin-left:215px;padding-inline:24px}.tiles{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.side{position:sticky;inset:0;width:100%;padding:9px 12px 7px;border-right:0;border-bottom:1px solid var(--line)}.brand{margin:0 0 7px;font-size:17px}.mark{width:29px;height:29px}.label,.spacer,.rule,.user{display:none}.nav{display:flex;overflow:auto;gap:3px}.nav a{min-height:34px;flex:none;gap:5px;padding:0 8px;font-size:9px;white-space:nowrap}.nav a span:first-child{width:auto;font-size:13px}.logout{position:absolute;top:10px;right:9px;padding:8px;font-size:0}.logout:after{content:"↪";font-size:17px}.main{margin:0;padding:19px 14px 35px}.top{margin-bottom:18px}.top>span:last-child{display:none}.hero{min-height:220px;padding:23px;background-position:58% center}.stats{grid-template-columns:1fr}.stat{padding:10px 12px}.stat+.stat{border-top:1px solid var(--line);border-left:0}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="side" aria-label="Navegação">
+
+      <a class="brand" href="{{ url_for('main') }}">
+        <span class="mark" aria-hidden="true">⌂</span>EstudeJá
+      </a>
+
+      <p class="label">Seu espaço</p>
+
+      <nav class="nav">
+        <a class="active" href="{{ url_for('main') }}">
+          <span>⌂</span>Início
+        </a>
+
+        <a href="{{ url_for('materias') }}">
+          <span>▤</span>Matérias
+        </a>
+
+        <a href="{{ url_for('exercicios') }}">
+          <span>✎</span>Exercícios
+        </a>
+
+        <a href="{{ url_for('ia') }}">
+          <span>✳</span>Assistência com IA
+        </a>
+
+        <a href="{{ url_for('progresso') }}">
+          <span>↗</span>Meu progresso
+        </a>
+
+        <a href="{{ url_for('simulados') }}">
+          <span>▣</span>Simulados
+        </a>
+      </nav>
+
+      <div class="spacer"></div>
+      <div class="rule"></div>
+
+      <p class="label">Conta</p>
+
+      <nav class="nav">
+        <a href="{{ url_for('perfil') }}">
+          <span>◎</span>Configurações de perfil
+        </a>
+      </nav>
+
+      <div class="user">
+        <span class="avatar">{{nome[0]}}</span>{{nome}}
+      </div>
+
+      <a class="logout" href="{{ url_for('logout') }}">
+        ↪ &nbsp;Sair da conta
+      </a>
+
+    </aside>
+
+    <main class="main">
+      <div class="content">
+
+        <header class="top">
+          <span>EstudeJá &nbsp;/&nbsp; <strong>Início</strong></span>
+          <span>Seu espaço de aprendizagem</span>
+        </header>
+
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Seu próximo passo começa aqui</p>
+
+            <h1>Olá, estudante.</h1>
+
+            <p>
+              Um pouco de dedicação hoje já faz diferença.
+              Escolha uma matéria e comece no seu ritmo.
+            </p>
+
+            <a class="button" href="{{ url_for('materias') }}">
+              Escolher matéria &nbsp; →
+            </a>
+          </div>
+        </section>
+
+        <section class="stats" aria-label="Resumo dos estudos">
+
+          <div class="stat">
+            <b>Seu ritmo</b>
+            <span>Comece uma sessão de estudo</span>
+          </div>
+
+          <div class="stat">
+            <b>6 matérias</b>
+            <span>Para explorar e praticar</span>
+          </div>
+
+          <div class="stat">
+            <b>Seu progresso</b>
+            <span>Acompanhe sua jornada</span>
+          </div>
+
+        </section>
+
+        <h2 class="section-title">Explore seu espaço</h2>
+
+        <section class="tiles">
+
+          <a class="tile" href="{{ url_for('materias') }}">
+            <span class="tile-icon">▤</span>
+            <h2>Estudar por matéria</h2>
+            <p>Escolha um assunto para revisar.</p>
+          </a>
+
+          <a class="tile" href="{{ url_for('ia') }}">
+            <span class="tile-icon">✳</span>
+            <h2>Assistência com IA</h2>
+            <p>Encontre ajuda para suas dúvidas.</p>
+          </a>
+
+          <a class="tile" href="{{ url_for('progresso') }}">
+            <span class="tile-icon">↗</span>
+            <h2>Meu progresso</h2>
+            <p>Acompanhe sua jornada de estudos.</p>
+          </a>
+
+          <a class="tile" href="{{ url_for('simulados') }}">
+            <span class="tile-icon">▣</span>
+            <h2>Simulados</h2>
+            <p>Prepare-se para suas avaliações.</p>
+          </a>
+
+          <a class="tile" href="{{ url_for('perfil') }}">
+            <span class="tile-icon">◎</span>
+            <h2>Configurações de perfil</h2>
+            <p>Confira seus dados de conta.</p>
+          </a>
+
+        </section>
+
+        <p class="note">
+          Comece por uma matéria. Seu histórico e suas atividades aparecerão
+          aqui conforme as funcionalidades forem conectadas.
+        </p>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>
+```

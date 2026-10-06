@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e8">
+  <title>Criar conta | EstudeJá</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18372f;
+      --muted: #68766c;
+      --paper: #f4f1e8;
+      --white: #fffefa;
+      --green: #1d5947;
+      --green-dark: #174536;
+      --lime: #d4e78a;
+      --line: #e5e5d9;
+    }
+
+    * { box-sizing: border-box; }
+    body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; }
+    button, input { font: inherit; }
+    .page { display: grid; grid-template-columns: minmax(440px, 0.92fr) minmax(480px, 1.08fr); min-height: 100vh; padding: 22px; gap: 22px; }
+    .auth-side { display: flex; flex-direction: column; min-height: calc(100vh - 44px); padding: clamp(28px, 5vw, 68px); border: 1px solid rgba(24, 55, 47, 0.07); border-radius: 6px; background: var(--white); animation: arrive 650ms ease both; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; width: fit-content; color: var(--ink); font-family: "Manrope", sans-serif; font-size: 20px; font-weight: 800; text-decoration: none; }
+    .brand-mark { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: var(--lime); }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .auth-content { width: min(100%, 390px); margin: auto; padding: 36px 0; }
+    .eyebrow { margin: 0 0 10px; color: var(--green); font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+    h1 { max-width: 370px; margin: 0; font-family: "Manrope", sans-serif; font-size: clamp(32px, 3.2vw, 42px); font-weight: 700; line-height: 1.12; }
+    .intro { margin: 12px 0 25px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .field { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 7px; color: var(--ink); font-size: 13px; font-weight: 700; }
+    .input-wrap { position: relative; }
+    input[type="text"], input[type="email"], input[type="password"] { width: 100%; height: 47px; padding: 0 14px; border: 1px solid var(--line); border-radius: 4px; outline: none; background: #fff; color: var(--ink); transition: border-color 160ms ease, box-shadow 160ms ease; }
+    input::placeholder { color: #9aa39a; }
+    input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(29, 89, 71, 0.11); }
+    .password-input { padding-right: 52px !important; }
+    .show-password { position: absolute; top: 50%; right: 9px; display: grid; width: 34px; height: 34px; padding: 0; place-items: center; transform: translateY(-50%); border: 0; border-radius: 3px; background: transparent; color: var(--muted); cursor: pointer; }
+    .show-password:hover { background: var(--paper); color: var(--ink); }
+    .show-password svg { width: 19px; height: 19px; }
+    .terms { display: flex; align-items: flex-start; gap: 9px; margin: 19px 0; color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.5; cursor: pointer; }
+    .terms input { flex: 0 0 auto; width: 15px; height: 15px; margin: 1px 0 0; accent-color: var(--green); }
+    a { color: var(--green); font-weight: 700; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .submit { display: flex; width: 100%; height: 50px; align-items: center; justify-content: center; gap: 10px; border: 0; border-radius: 4px; background: var(--green); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
+    .submit:hover { transform: translateY(-1px); background: var(--green-dark); }
+    .submit svg { width: 17px; height: 17px; }
+    .notice { min-height: 18px; margin: 10px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
+    .signin { margin: 19px 0 0; color: var(--muted); font-size: 13px; text-align: center; }
+    .footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #89928a; font-size: 11px; }
+    .footer-links { display: flex; gap: 17px; }
+    .footer a { color: var(--muted); font-weight: 500; }
+    .visual-side { position: relative; display: flex; min-height: calc(100vh - 44px); overflow: hidden; align-items: flex-end; padding: clamp(30px, 5vw, 64px); border-radius: 6px; background-color: #687960; background-image: linear-gradient(180deg, rgba(20, 42, 33, 0.04) 24%, rgba(15, 38, 29, 0.82) 100%), url("https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1800&q=85"); background-position: center; background-size: cover; animation: arrive 800ms 100ms ease both; }
+    .visual-side::before { position: absolute; inset: 14px; border: 1px solid rgba(255, 255, 255, 0.27); border-radius: 3px; content: ""; pointer-events: none; }
+    .visual-copy { position: relative; max-width: 520px; color: white; }
+    .quote-mark { display: grid; width: 43px; height: 43px; margin-bottom: 23px; place-items: center; border-radius: 50%; background: var(--lime); color: var(--ink); font-family: Georgia, serif; font-size: 31px; line-height: 1; }
+    .visual-copy blockquote { margin: 0; font-family: "Manrope", sans-serif; font-size: clamp(26px, 3vw, 39px); font-weight: 600; line-height: 1.2; }
+    .visual-copy p { margin: 18px 0 0; color: rgba(255, 255, 255, 0.8); font-size: 14px; }
+    @keyframes arrive { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 900px) { .page { grid-template-columns: minmax(360px, 0.9fr) minmax(300px, 1.1fr); padding: 14px; gap: 14px; } .auth-side, .visual-side { min-height: calc(100vh - 28px); } .auth-side { padding: 32px; } .visual-side { padding: 36px; } }
+    @media (max-width: 700px) { .page { display: block; padding: 0; } .auth-side { min-height: 100svh; padding: 27px 24px 20px; border: 0; border-radius: 0; } .auth-content { width: min(100%, 420px); padding: 42px 0; } h1 { font-size: 36px; } .visual-side { display: none; } .footer { width: min(100%, 420px); margin: 0 auto; } }
+    @media (max-width: 380px) { .auth-side { padding-right: 19px; padding-left: 19px; } .footer { font-size: 10px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="auth-side" aria-labelledby="register-title">
+      <a class="brand" href="/login" aria-label="EstudeJá, página inicial">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.5 5.5c3.1-.8 5.9-.2 8.5 1.8v12c-2.6-2-5.4-2.6-8.5-1.8z" />
+            <path d="M20.5 5.5c-3.1-.8-5.9-.2-8.5 1.8v12c2.6-2 5.4-2.6 8.5-1.8z" />
+            <path d="M12 7.3v12" />
+          </svg>
+        </span>
+        <span>EstudeJá</span>
+      </a>
+
+      <div class="auth-content">
+        <p class="eyebrow">Seu espaço de estudos</p>
+        <h1 id="register-title">Dê o primeiro passo.</h1>
+        <p class="intro">Crie sua conta e organize seus estudos no seu ritmo.</p>
+
+        <form id="register-form" method="post" action="/register">
+          <div class="field">
+            <label for="name">Nome completo</label>
+            <input id="name" name="name" type="text" placeholder="Como podemos te chamar?" autocomplete="name" required>
+          </div>
+
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" placeholder="voce@exemplo.com" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="password">Senha</label>
+            <div class="input-wrap">
+              <input class="password-input" id="password" name="password" type="password" placeholder="Pelo menos 8 caracteres" autocomplete="new-password" minlength="8" required>
+              <button class="show-password" type="button" data-password="password" aria-label="Mostrar senha" aria-pressed="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                  <circle cx="12" cy="12" r="2.6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="confirm-password">Confirmar senha</label>
+            <div class="input-wrap">
+              <input class="password-input" id="confirm-password" name="confirm_password" type="password" placeholder="Digite a senha novamente" autocomplete="new-password" required>
+              <button class="show-password" type="button" data-password="confirm-password" aria-label="Mostrar confirmação de senha" aria-pressed="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                  <circle cx="12" cy="12" r="2.6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <label class="terms"><input type="checkbox" name="terms" required><span>Li e concordo com os <a href="#termos">termos de uso</a> e a <a href="#privacidade">política de privacidade</a>.</span></label>
+
+          <button class="submit" type="submit">
+            Criar minha conta
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+          <p class="notice" id="form-notice" role="status" aria-live="polite">{{ error|default("") }}</p>
+        </form>
+
+        <p class="signin">Já tem uma conta? <a href="/login">Entrar</a></p>
+      </div>
+
+      <footer class="footer">
+        <span>© 2026 EstudeJá</span>
+        <span class="footer-links"><a href="#privacidade">Privacidade</a><a href="#ajuda">Ajuda</a></span>
+      </footer>
+    </section>
+
+    <aside class="visual-side" aria-label="Inspiração para seus estudos">
+      <div class="visual-copy">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <blockquote>O futuro que você quer começa com o que aprende hoje.</blockquote>
+        <p>Uma nova jornada começa com uma escolha.</p>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirm-password");
+
+    document.querySelectorAll(".show-password").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.password);
+        const isVisible = input.type === "text";
+        input.type = isVisible ? "password" : "text";
+        button.setAttribute("aria-pressed", String(!isVisible));
+        button.setAttribute("aria-label", isVisible ? "Mostrar senha" : "Ocultar senha");
+      });
+    });
+
+    confirmPasswordInput.addEventListener("input", () => {
+      confirmPasswordInput.setCustomValidity(
+        confirmPasswordInput.value === passwordInput.value ? "" : "As senhas não coincidem."
+      );
+    });
+
+    passwordInput.addEventListener("input", () => {
+      confirmPasswordInput.setCustomValidity(
+        confirmPasswordInput.value === passwordInput.value ? "" : "As senhas não coincidem."
+      );
+    });
+
+  </script>
+</body>
+</html>
